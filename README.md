@@ -36,15 +36,18 @@ cargo run
 
 ### project map
 
-    ```cmd
+```cmd
     ├── src
     │   ├── main.rs
     │   ├── routes
     │   ├── lib.rs
     │   ├── data
+    │   │   ├── .env
     ├── database
     │   ├── init.sql
     ├── Cargo.lock
     ├── Cargo.toml
     ├── README.md
     ├── docker-compose.yml
+
+```
