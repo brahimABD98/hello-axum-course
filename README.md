@@ -10,13 +10,13 @@ this is my first axum project following the great tutorial from [Brooks builds '
 docker-compose up -d
 ```
 
-### to run the container on the background( -d ) and wait for the container to be ready( --wait )
+### to run the container on the background(-d) and wait for the container to be ready(--wait)
 
 ```cmd
 docker-compose up -d --wait
 ```
 
-### add .env file with the following content
+### add .env file with the following content (project map below)
 
 ```env
 DATABASE_URL=postgres://postgres:keyoarbcat@localhost:5432/postgres
