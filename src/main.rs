@@ -1,7 +1,6 @@
-use hello_axum::run;
+use hello_axum::runserver;
 
 #[tokio::main]
 async fn main() {
-    run().await;
+    runserver().await;
 }
-

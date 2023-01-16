@@ -1,6 +1,6 @@
 # hello axum course
 
-this is my first axum project following the great tutorial from [Brooks builds 's axum playlist on youtube](https://www.youtube.com/@BrooksBuilds)
+this is my first axum project following the great tutorial from [Brooks builds 's axum playlist on youtube](https://www.youtube.com/watch?v=tzFdrLxv1Bg&list=PLrmY5pVcnuE-_CP7XZ_44HN-mDrLQV4nS)
 
 ## how to run
 

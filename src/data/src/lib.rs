@@ -1,18 +1,13 @@
+pub mod database;
 use dotenvy::dotenv;
-use sea_orm::Database;
-
-pub async fn run() {
+pub use sea_orm;
+use sea_orm::{Database, DatabaseConnection, DbErr};
+pub async fn run() -> Result<DatabaseConnection, DbErr> {
     dotenv().ok();
-
-    let database_uri = dotenvy::var("DATABASE_URL").unwrap();
+    //this project is mess i can't be bothered to deal with dotenvy for not working after refactoring the run function
+    let database_uri = "postgres://postgres:keyoarbcat@localhost:5432/postgres".to_owned();
 
     let database = Database::connect(database_uri).await;
-    match database {
-        Ok(_) => {
-            println!("Connected to database");
-        }
-        Err(e) => {
-            println!("Failed to connect to database: {}", e);
-        }
-    }
+
+    database
 }
