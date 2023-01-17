@@ -8,6 +8,7 @@ mod always_errors;
 mod create_task;
 mod custom_json_extractor;
 mod get_json;
+mod get_tasks;
 mod hello_world;
 mod mirror_body_json;
 mod mirror_body_string;
@@ -23,6 +24,8 @@ use custom_json_extractor::custom_json_extractor;
 use data::run;
 use data::sea_orm::DatabaseConnection;
 use get_json::get_json;
+use get_tasks::get_all_tasks;
+use get_tasks::get_one_task;
 use mirror_body_json::mirror_body_json;
 use mirror_body_string::mirror_body_string;
 use mirror_custom_header::mirror_custom_header;
@@ -52,6 +55,8 @@ pub fn create_routes(database: DatabaseConnection) -> Router<(), Body> {
         .route("/validate_data", post(validate_data))
         .route("/custom_json_extractor", post(custom_json_extractor))
         .route("/tasks", post(create_task))
+        .route("/tasks/:id", get(get_one_task))
+        .route("/tasks/getall", get(get_all_tasks))
         .layer(Extension(database))
         .layer(cors)
 }
