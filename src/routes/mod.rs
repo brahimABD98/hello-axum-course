@@ -1,7 +1,7 @@
 use axum::{
     body::Body,
     http::Method,
-    routing::{get, post},
+    routing::{get, patch, post, put},
     Extension, Router,
 };
 mod always_errors;
@@ -17,6 +17,7 @@ mod mirror_user_agent;
 mod path_variables;
 mod query_params;
 mod returns_201;
+mod update_task;
 mod validate_data;
 use always_errors::always_error;
 use create_task::create_task;
@@ -34,6 +35,7 @@ use path_variables::{hard_coded_path, path_variables};
 use query_params::queryparams;
 use returns_201::returns_201;
 use tower_http::cors::{Any, CorsLayer};
+use update_task::update_task;
 use validate_data::validate_data;
 pub fn create_routes(database: DatabaseConnection) -> Router<(), Body> {
     let cors = CorsLayer::new()
@@ -57,6 +59,7 @@ pub fn create_routes(database: DatabaseConnection) -> Router<(), Body> {
         .route("/tasks", post(create_task))
         .route("/tasks/:id", get(get_one_task))
         .route("/tasks/getall", get(get_all_tasks))
+        .route("/tasks/:id", put(update_task))
         .layer(Extension(database))
         .layer(cors)
 }
