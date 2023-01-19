@@ -1,12 +1,13 @@
 use axum::{
     body::Body,
     http::Method,
-    routing::{get, patch, post, put},
+    routing::{get, patch, post, put, delete},
     Extension, Router,
 };
 mod always_errors;
 mod create_task;
 mod custom_json_extractor;
+mod delete_task;
 mod get_json;
 mod get_tasks;
 mod hello_world;
@@ -14,6 +15,7 @@ mod mirror_body_json;
 mod mirror_body_string;
 mod mirror_custom_header;
 mod mirror_user_agent;
+mod partial_update;
 mod path_variables;
 mod query_params;
 mod returns_201;
@@ -22,7 +24,9 @@ mod validate_data;
 use always_errors::always_error;
 use create_task::create_task;
 use custom_json_extractor::custom_json_extractor;
-use data::run;
+use delete_task::delete_task;
+use partial_update::partial_update_task;
+
 use data::sea_orm::DatabaseConnection;
 use get_json::get_json;
 use get_tasks::get_all_tasks;
@@ -60,6 +64,8 @@ pub fn create_routes(database: DatabaseConnection) -> Router<(), Body> {
         .route("/tasks/:id", get(get_one_task))
         .route("/tasks/getall", get(get_all_tasks))
         .route("/tasks/:id", put(update_task))
+        .route("/tasks/partial_update/:id", patch(partial_update_task))
+        .route("/tasks/:id",delete(delete_task))
         .layer(Extension(database))
         .layer(cors)
 }
