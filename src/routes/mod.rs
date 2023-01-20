@@ -1,7 +1,7 @@
 use axum::{
     body::Body,
     http::Method,
-    routing::{get, patch, post, put, delete},
+    routing::{delete, get, patch, post, put},
     Extension, Router,
 };
 mod always_errors;
@@ -11,6 +11,7 @@ mod delete_task;
 mod get_json;
 mod get_tasks;
 mod hello_world;
+mod manage_user;
 mod mirror_body_json;
 mod mirror_body_string;
 mod mirror_custom_header;
@@ -23,7 +24,9 @@ mod update_task;
 mod validate_data;
 use always_errors::always_error;
 use create_task::create_task;
-use custom_json_extractor::custom_json_extractor;
+use manage_user::create_user;
+use manage_user::login;
+// use custom_json_extractor::custom_json_extractor;
 use delete_task::delete_task;
 use partial_update::partial_update_task;
 
@@ -41,7 +44,7 @@ use returns_201::returns_201;
 use tower_http::cors::{Any, CorsLayer};
 use update_task::update_task;
 use validate_data::validate_data;
-pub fn create_routes(database: DatabaseConnection) -> Router<(), Body> {
+pub fn create_routes(database: DatabaseConnection) -> Router<Body> {
     let cors = CorsLayer::new()
         .allow_methods([Method::GET, Method::POST])
         .allow_origin(Any);
@@ -59,13 +62,15 @@ pub fn create_routes(database: DatabaseConnection) -> Router<(), Body> {
         .route("/returns_201", post(returns_201))
         .route("/get_json", get(get_json))
         .route("/validate_data", post(validate_data))
-        .route("/custom_json_extractor", post(custom_json_extractor))
+        // .route("/custom_json_extractor", post(custom_json_extractor))
         .route("/tasks", post(create_task))
         .route("/tasks/:id", get(get_one_task))
         .route("/tasks/getall", get(get_all_tasks))
         .route("/tasks/:id", put(update_task))
         .route("/tasks/partial_update/:id", patch(partial_update_task))
-        .route("/tasks/:id",delete(delete_task))
+        .route("/user", post(create_user))
+        .route("/tasks/:id", delete(delete_task))
+        .route("/user/login", post(login))
         .layer(Extension(database))
         .layer(cors)
 }
