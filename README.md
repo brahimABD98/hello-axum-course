@@ -22,16 +22,16 @@ docker-compose up -d --wait
 DATABASE_URL=postgres://postgres:keyoarbcat@localhost:5432/postgres
 ```
 
-### for live reload
-
-```cmd
-cargo watch -x run
-```
-
-### for normal run
+### to run the project
 
 ```cmd
 cargo run
+```
+
+### run with live reload
+
+```cmd
+cargo watch -x run
 ```
 
 ### project map
